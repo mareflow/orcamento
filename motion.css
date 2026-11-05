@@ -1,0 +1,171 @@
+/* ==========================================================================
+   MARÉ FLOW — MOTION & MICRO-INTERACTIONS
+   Referência visual oficial: https://www.mareflow.com.br/
+   ========================================================================== */
+
+/* Button sweep shimmer effect */
+.button, .nav-cta, .round-link {
+  isolation: isolate;
+}
+
+.button::before, .nav-cta::before {
+  content: '';
+  position: absolute;
+  inset: -50% -60%;
+  background: linear-gradient(115deg, transparent 38%, rgba(255, 255, 255, 0.28) 50%, transparent 62%);
+  transform: translateX(-80%);
+  transition: transform 0.65s cubic-bezier(0.25, 0.8, 0.25, 1);
+  pointer-events: none;
+  z-index: -1;
+}
+
+.button:hover::before, .nav-cta:hover::before {
+  transform: translateX(80%);
+}
+
+/* Click ripple */
+.button .click-ripple, .nav-cta .click-ripple {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.35);
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  animation: button-ripple 0.6s ease-out forwards;
+  z-index: -1;
+}
+
+@keyframes button-ripple {
+  from {
+    opacity: 0.6;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(24);
+  }
+}
+
+/* Magnetic button smooth tracking */
+.magnetic {
+  transition: transform 0.2s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* Arrow hover transforms */
+.button > span.arrow,
+.nav-cta span.arrow,
+.text-link > span,
+.w-tool-arrow {
+  transition: transform 0.25s ease;
+}
+
+.button:hover > span.arrow,
+.nav-cta:hover span.arrow,
+.w-tool-box:hover .w-tool-arrow {
+  transform: translate(3px, -3px);
+}
+
+.text-link:hover > span {
+  transform: translateY(3px);
+}
+
+.round-link:hover {
+  transform: rotate(15deg);
+}
+
+/* Service card symbols glow on hover */
+.service-symbol {
+  transition: color 0.3s ease, filter 0.3s ease;
+}
+
+.service-card:hover .service-symbol {
+  color: var(--cyan);
+  filter: drop-shadow(0 0 10px rgba(0, 168, 232, 0.5));
+}
+
+/* Entrance reveal animations */
+.enter {
+  opacity: 0;
+  translate: 0 18px;
+  transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), translate 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+  transition-delay: var(--enter-delay, 0ms);
+  will-change: opacity, translate;
+}
+
+.enter.is-visible {
+  opacity: 1;
+  translate: 0 0;
+}
+
+.hero-copy > * {
+  animation: hero-entrance 0.8s cubic-bezier(0.2, 0.75, 0.25, 1) both;
+}
+.hero-copy > .eyebrow { animation-delay: 40ms; }
+.hero-copy > h1 { animation-delay: 110ms; }
+.hero-copy > .hero-description { animation-delay: 190ms; }
+.hero-copy > .hero-actions { animation-delay: 270ms; }
+.hero-copy > .hero-footnote { animation-delay: 340ms; }
+
+@keyframes hero-entrance {
+  from {
+    opacity: 0;
+    translate: 0 20px;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+
+/* Mobile drop navigation animation */
+@keyframes rx-mobile-nav-drop {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.nav-links-wrap.open {
+  animation: rx-mobile-nav-drop 0.24s ease-out;
+}
+
+/* Pulse animation for active simulation status */
+.pulse-demo {
+  animation: pulsePoint 1.6s infinite;
+}
+
+@keyframes pulsePoint {
+  0% { transform: scale(0.92); opacity: 0.8; }
+  50% { transform: scale(1.25); opacity: 1; box-shadow: 0 0 12px #10b981; }
+  100% { transform: scale(0.92); opacity: 0.8; }
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+  .enter {
+    opacity: 1 !important;
+    translate: 0 0 !important;
+  }
+  .hero-copy > * {
+    opacity: 1 !important;
+    translate: none !important;
+  }
+  .magnetic {
+    transform: none !important;
+  }
+  .click-ripple {
+    display: none !important;
+  }
+}

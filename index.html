@@ -1,0 +1,1532 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#00162d">
+  <title>Maré Flow Orçamentos — Simulador Instantâneo & Painel para Centros Automotivos</title>
+  <meta name="description" content="Converta até 3x mais clientes com cotações automotivas instantâneas, CRM integrado e geração de leads 24/7 direto no WhatsApp da sua oficina mecânica.">
+  
+  <!-- Favicons Maré Flow -->
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="favicon.png">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="shortcut icon" href="favicon.ico">
+
+  <!-- Redirecionamento Automático: Se o link vier com ?o= ou rota de oficina, abre direto o simulador do cliente -->
+  <script>
+    (function() {
+      try {
+        var params = new URLSearchParams(window.location.search);
+        var slug = params.get('o') || params.get('oficina') || params.get('tenant');
+        if (slug) {
+          window.location.replace('simulador.html' + window.location.search);
+          return;
+        }
+        var path = (window.location.pathname || '').replace(/^\/+|\/+$/g, '');
+        var partes = path.split('/');
+        var rota = partes[0] ? partes[0].toLowerCase().trim() : '';
+        var paginas = ['index.html', 'crm.html', 'admin.html', 'simulador.html', 'admin_backup.html', ''];
+        if (rota && paginas.indexOf(rota) === -1 && rota.indexOf('.') === -1) {
+          window.location.replace('simulador.html?o=' + encodeURIComponent(rota));
+        }
+      } catch (e) {}
+    })();
+  </script>
+
+  <!-- Estilos e Animações Maré Flow -->
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="motion.css">
+  <script src="script.js" defer></script>
+</head>
+
+<body>
+  <a class="skip" href="#principal">Pular para o conteúdo</a>
+
+  <!-- ==========================================================================
+       HEADER / NAVBAR MARÉ FLOW (FIXO NO TOPO)
+       ========================================================================== -->
+  <header class="header">
+    <div class="container nav-inner">
+      <a href="#inicio" class="brand" aria-label="Maré Flow Orçamentos">
+        <img src="logo.png" alt="Maré Flow" width="512" height="512">
+        <span class="brand-sub">ORÇAMENTOS</span>
+      </a>
+
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="navigation" aria-label="Abrir menu">
+        <span></span>
+        <span></span>
+      </button>
+
+      <nav id="navigation" class="nav-links-wrap" aria-label="Menu principal">
+        <a href="#como-funciona">Como funciona &amp; App ao Vivo</a>
+        <a href="#diagnostico">Diagnóstico da Oficina</a>
+        <a href="#comparativo">Comparativo</a>
+        <a href="#faq">Dúvidas</a>
+
+        <div class="nav-actions">
+          <!-- BOTÃO DE LOGIN EM DESTAQUE -->
+          <a href="crm.html" class="nav-login-btn" title="Login para donos de oficinas parceiras">
+            <svg class="svg-icon svg-icon-sm" viewBox="0 0 24 24" aria-hidden="true">
+              <rect width="18" height="11" x="3" y="11" rx="2" ry="2"/>
+              <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+            </svg>
+            <span>Entrar no Painel</span>
+          </a>
+
+          <!-- BOTÃO CTA DE CONVERSÃO -->
+          <a class="nav-cta magnetic" href="https://wa.me/5548992233575?text=Ol%C3%A1!%20Quero%20contratar%20o%20Mar%C3%A9%20Flow%20Or%C3%A7amentos%20para%20minha%20oficina" target="_blank" rel="noopener noreferrer">
+            <span>Ativar Minha Oficina</span>
+            <span class="arrow" aria-hidden="true">↗</span>
+          </a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main id="principal">
+
+    <!-- ==========================================================================
+         HERO SECTION: ALTA CONVERSÃO & INTERATIVIDADE
+         ========================================================================== -->
+    <section id="inicio" class="hero">
+      <div class="hero-glow" aria-hidden="true"></div>
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <p class="eyebrow"><span class="line"></span> PLATAFORMA OFICIAL DE COTAÇÃO AUTOMOTIVA</p>
+          <h1>Transforme orçamentos demorados em <em>vendas no WhatsApp</em>.</h1>
+          <p class="hero-description">
+            Seu cliente descobre o preço exato com peças homologadas e litragem de fábrica em menos de 30 segundos. Sua oficina recebe o lead qualificado pronto para agendar e organiza tudo no CRM.
+          </p>
+
+          <!-- BULLETS DE IMPACTO COM ÍCONES OUTLINE SVG -->
+          <div class="hero-bullets-grid">
+            <div class="hero-bullet-item">
+              <span class="hero-bullet-icon">
+                <svg class="svg-icon svg-icon-sm" viewBox="0 0 24 24">
+                  <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+                </svg>
+              </span>
+              <span>Cotação completa em 15s</span>
+            </div>
+            <div class="hero-bullet-item">
+              <span class="hero-bullet-icon">
+                <svg class="svg-icon svg-icon-sm" viewBox="0 0 24 24">
+                  <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                </svg>
+              </span>
+              <span>Lead pré-fechado no WhatsApp</span>
+            </div>
+            <div class="hero-bullet-item">
+              <span class="hero-bullet-icon">
+                <svg class="svg-icon svg-icon-sm" viewBox="0 0 24 24">
+                  <line x1="18" y1="20" x2="18" y2="10"/>
+                  <line x1="12" y1="20" x2="12" y2="4"/>
+                  <line x1="6" y1="20" x2="6" y2="14"/>
+                </svg>
+              </span>
+              <span>CRM Kanban automático</span>
+            </div>
+            <div class="hero-bullet-item">
+              <span class="hero-bullet-icon">
+                <svg class="svg-icon svg-icon-sm" viewBox="0 0 24 24">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                </svg>
+              </span>
+              <span>Seus preços e margens de lucro</span>
+            </div>
+          </div>
+
+          <div class="hero-actions">
+            <a href="https://wa.me/5548992233575?text=Ol%C3%A1!%20Quero%20ativar%20o%20simulador%20de%20or%C3%A7amentos%20na%20minha%20oficina" target="_blank" rel="noopener noreferrer" class="button primary magnetic">
+              <span>Quero Ativar Minha Oficina</span>
+              <span class="arrow" aria-hidden="true">↗</span>
+            </a>
+            <a href="#como-funciona" class="button secondary magnetic">
+              <span>Testar Simulador no Celular</span>
+              <span class="arrow" aria-hidden="true">↓</span>
+            </a>
+          </div>
+
+          <!-- ATALHO PARA QUEM ESTÁ ENTRANDO PARA LOGAR -->
+          <div class="hero-client-shortcut">
+            <span>Já tem uma oficina cadastrada?</span>
+            <a href="crm.html">Acesse o seu Painel de Gestão &amp; Leads →</a>
+          </div>
+        </div>
+
+        <!-- MOCKUP VISUAL OFICIAL DO SIMULADOR (BASEADO NO APLICATIVO REAL) -->
+        <div class="hero-visual">
+          <div class="showcase-card" id="hero-showcase-card" role="button" tabindex="0" title="Clique para testar a demonstração completa ao vivo no celular">
+            <!-- TOPBAR NAVEGADOR / APP COM LINK PARA DEMONSTRAÇÃO -->
+            <div class="showcase-topbar">
+              <div class="topbar-dots">
+                <span class="dot dot-red"></span>
+                <span class="dot dot-yellow"></span>
+                <span class="dot dot-green"></span>
+              </div>
+              <a href="#como-funciona" class="preview-address-bar" title="Clique para testar o simulador completo no celular">
+                <span class="preview-address-url-wrap">
+                  <svg class="svg-icon svg-icon-sm" viewBox="0 0 24 24">
+                    <rect width="18" height="11" x="3" y="11" rx="2" ry="2"/>
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                  </svg>
+                  <span class="preview-url-text">orcamento.mareflow.com.br/simulador</span>
+                </span>
+                <span class="preview-address-cta">
+                  <span>Testar no Celular</span>
+                  <span class="arrow-down" aria-hidden="true">↓</span>
+                </span>
+              </a>
+            </div>
+
+            <!-- CABEÇALHO CLEAN DO SERVIÇO -->
+            <div class="real-app-hero-header">
+              <span class="real-app-badge-speed">
+                <span class="pulse-dot-green"></span> RESULTADO NA TELA EM MENOS DE 30 SEGUNDOS
+              </span>
+              <h3 class="real-app-title">Quanto Custa a Troca de Óleo do seu Câmbio Automático?</h3>
+            </div>
+
+            <!-- GRID LIMPO DO EXEMPLO REAL (FIAT CRONOS 1.3 CVT) -->
+            <div class="mockup-grid">
+              <!-- CARD ESQUERDO: SELEÇÃO DO VEÍCULO -->
+              <div class="mockup-box">
+                <div class="mockup-header">
+                  <span>Veículo Selecionado</span>
+                  <span class="step-tag-pill">Etapa 3 de 5</span>
+                </div>
+                <div class="sim-car-title">Fiat Cronos</div>
+                <div class="sim-service-pill">
+                  <svg class="svg-icon svg-icon-sm" viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="3"/>
+                    <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+                  </svg>
+                  <span>1.3 Firefly Flex (Câmbio CVT)</span>
+                </div>
+                <div class="sim-clean-specs">
+                  <span class="clean-spec-tag">Fluido Tutela CVT Homologado</span>
+                  <span class="clean-spec-tag">Troca 100% por Diálise</span>
+                </div>
+              </div>
+
+              <!-- CARD DIREITO: COTAÇÃO REAL E BOTÃO DE AÇÃO -->
+              <div class="mockup-box result-box">
+                <div class="mockup-header">
+                  <span>Orçamento Oficial</span>
+                  <span class="result-badge-lock">
+                    <span class="pulse-dot-green"></span> Preço Travado
+                  </span>
+                </div>
+                <div class="sim-price-row">
+                  <span class="sim-price-val">R$ 890,00</span>
+                  <span class="sim-price-installment">em até 10x</span>
+                </div>
+                <p class="sim-clean-guarantee">
+                  Peças de fábrica • Garantia oficial • Sem surpresas
+                </p>
+                <a href="#como-funciona" class="sim-whatsapp-btn" title="Testar o simulador completo no celular">
+                  <svg class="svg-icon svg-icon-sm" viewBox="0 0 24 24">
+                    <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
+                  </svg>
+                  <span>Pedir no WhatsApp »</span>
+                </a>
+              </div>
+            </div>
+
+            <!-- RODAPÉ CLEAN CONVIDATIVO -->
+            <a href="#como-funciona" class="showcase-cta-bar" title="Clique para abrir a demonstração completa no celular">
+              <span class="showcase-cta-left">
+                <span class="showcase-cta-pulse"></span>
+                <span>5 Serviços Ativos: Câmbio, Motor, Freios, Pneus e Escapamentos</span>
+              </span>
+              <span class="showcase-cta-link">
+                <span>Testar no Celular</span>
+                <span class="arrow-down" aria-hidden="true">↓</span>
+              </span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         PROVA SOCIAL: OFICINAS PARCEIRAS
+         ========================================================================== -->
+    <section class="partners-section">
+      <div class="container">
+        <p class="partners-header">Centros automotivos e oficinas especializadas que já aceleram com a Maré Flow</p>
+        <div class="partners-marquee-wrapper" id="partners-marquee" role="region" aria-label="Centros automotivos parceiros">
+          <div class="partners-marquee-track">
+            <!-- GRUPO 1 DE LOGOS -->
+            <div class="partner-logo-item" title="Drag Car Auto Center">
+              <img src="images/parceiros/drag-car.png" alt="Drag Car Auto Center" decoding="async">
+            </div>
+            <div class="partner-logo-item" title="Dream Car Oficina Especializada">
+              <img src="images/parceiros/dream-car.png" alt="Dream Car" decoding="async">
+            </div>
+            <div class="partner-logo-item" title="Tateno Centro Automotivo">
+              <img src="images/parceiros/tateno.png" alt="Tateno" decoding="async">
+            </div>
+            <div class="partner-logo-item" title="Turbo Sul Performance">
+              <img src="images/parceiros/turbo-sul.png" alt="Turbo Sul" decoding="async">
+            </div>
+            <div class="partner-logo-item" title="Drag Service">
+              <img src="images/parceiros/drag-service.png" alt="Drag Service" decoding="async">
+            </div>
+            <div class="partner-logo-item" title="ETS Educação Automotiva">
+              <img src="images/parceiros/ets-educacao.png" alt="ETS Educação" decoding="async">
+            </div>
+
+            <!-- GRUPO 2 (CLONE PARA LOOP INFINITO 100% SUAVE E CONTÍNUO) -->
+            <div class="partner-logo-item" aria-hidden="true">
+              <img src="images/parceiros/drag-car.png" alt="Drag Car Auto Center" decoding="async">
+            </div>
+            <div class="partner-logo-item" aria-hidden="true">
+              <img src="images/parceiros/dream-car.png" alt="Dream Car" decoding="async">
+            </div>
+            <div class="partner-logo-item" aria-hidden="true">
+              <img src="images/parceiros/tateno.png" alt="Tateno" decoding="async">
+            </div>
+            <div class="partner-logo-item" aria-hidden="true">
+              <img src="images/parceiros/turbo-sul.png" alt="Turbo Sul" decoding="async">
+            </div>
+            <div class="partner-logo-item" aria-hidden="true">
+              <img src="images/parceiros/drag-service.png" alt="Drag Service" decoding="async">
+            </div>
+            <div class="partner-logo-item" aria-hidden="true">
+              <img src="images/parceiros/ets-educacao.png" alt="ETS Educação" decoding="async">
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         SEÇÃO COMPARATIVA: "ANTES VS. DEPOIS" (TRANSFORMAÇÃO OPERACIONAL)
+         ========================================================================== -->
+    <section id="comparativo" class="comparison-section">
+      <div class="container">
+        <div class="section-heading center-heading">
+          <p class="eyebrow"><span class="line"></span> TRANSFORMAÇÃO OPERACIONAL</p>
+          <h2>Elimine a lentidão nas cotações e acelere o fechamento de ordens de serviço.</h2>
+          <p>
+            Veja por que oficinas perdem até 40% das oportunidades no balcão e como a Maré Flow transforma visitantes em clientes agendados:
+          </p>
+        </div>
+
+        <div class="comparison-grid">
+          <!-- CARD ANTES (O PROCESSO MANUAL) -->
+          <div class="comparison-card before-card">
+            <span class="comp-badge">Processo Manual</span>
+            <h3 class="comp-title">Demorado, cansativo e perde vendas</h3>
+            <ul class="comp-list">
+              <li>
+                <span class="comp-icon-svg">
+                  <svg class="svg-icon svg-icon-sm" viewBox="0 0 24 24">
+                    <line x1="18" y1="6" x2="6" y2="18"/>
+                    <line x1="6" y1="6" x2="18" y2="18"/>
+                  </svg>
+                </span>
+                <span><strong>20 a 30 min perdidos:</strong> consultando catálogos de óleo e digitando na mão.</span>
+              </li>
+              <li>
+                <span class="comp-icon-svg">
+                  <svg class="svg-icon svg-icon-sm" viewBox="0 0 24 24">
+                    <line x1="18" y1="6" x2="6" y2="18"/>
+                    <line x1="6" y1="6" x2="18" y2="18"/>
+                  </svg>
+                </span>
+                <span><strong>Fuga no WhatsApp:</strong> cliente cota com vários e fecha com quem responder primeiro.</span>
+              </li>
+              <li>
+                <span class="comp-icon-svg">
+                  <svg class="svg-icon svg-icon-sm" viewBox="0 0 24 24">
+                    <line x1="18" y1="6" x2="6" y2="18"/>
+                    <line x1="6" y1="6" x2="18" y2="18"/>
+                  </svg>
+                </span>
+                <span><strong>Desconfiança técnica:</strong> sem dados claros dos insumos, cliente pede desconto.</span>
+              </li>
+              <li>
+                <span class="comp-icon-svg">
+                  <svg class="svg-icon svg-icon-sm" viewBox="0 0 24 24">
+                    <line x1="18" y1="6" x2="6" y2="18"/>
+                    <line x1="6" y1="6" x2="18" y2="18"/>
+                  </svg>
+                </span>
+                <span><strong>Orçamentos esquecidos:</strong> cotações perdidas em blocos de papel e conversas soltas.</span>
+              </li>
+            </ul>
+          </div>
+
+          <!-- CARD DEPOIS (COM A MARÉ FLOW) -->
+          <div class="comparison-card after-card">
+            <span class="comp-badge">Com Maré Flow</span>
+            <h3 class="comp-title">Automático, rápido e fecha na hora</h3>
+            <ul class="comp-list">
+              <li>
+                <span class="comp-icon-svg">
+                  <svg class="svg-icon svg-icon-sm" viewBox="0 0 24 24">
+                    <polyline points="20 6 9 17 4 12"/>
+                  </svg>
+                </span>
+                <span><strong>15 seg para cotar:</strong> cliente escolhe o carro e recebe o valor com peças homologadas.</span>
+              </li>
+              <li>
+                <span class="comp-icon-svg">
+                  <svg class="svg-icon svg-icon-sm" viewBox="0 0 24 24">
+                    <polyline points="20 6 9 17 4 12"/>
+                  </svg>
+                </span>
+                <span><strong>Lead pré-fechado:</strong> chega no WhatsApp com modelo, serviço e valor pré-aprovado.</span>
+              </li>
+              <li>
+                <span class="comp-icon-svg">
+                  <svg class="svg-icon svg-icon-sm" viewBox="0 0 24 24">
+                    <polyline points="20 6 9 17 4 12"/>
+                  </svg>
+                </span>
+                <span><strong>Autoridade imediata:</strong> dados oficiais de fluidos e filtros passam total segurança.</span>
+              </li>
+              <li>
+                <span class="comp-icon-svg">
+                  <svg class="svg-icon svg-icon-sm" viewBox="0 0 24 24">
+                    <polyline points="20 6 9 17 4 12"/>
+                  </svg>
+                </span>
+                <span><strong>CRM Kanban ativo:</strong> cada simulação entra no funil para agendamento e revisão.</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         A JORNADA COMPLETA EM TEMPO REAL: MOTORISTA + APP NO CELULAR + DONO DA OFICINA
+         ========================================================================== -->
+    <section id="como-funciona" class="unified-experience-section">
+      <!-- Âncora de compatibilidade para links que apontem para #demonstracao -->
+      <div id="demonstracao" class="anchor-offset" aria-hidden="true"></div>
+
+      <div class="container">
+        <div class="section-heading center-heading" style="margin-bottom: 32px;">
+          <p class="eyebrow"><span class="line"></span> A EXPERIÊNCIA COMPLETA EM TEMPO REAL</p>
+          <h2>O motorista cota em segundos.<br><span>Sua oficina fecha no WhatsApp.</span></h2>
+          <p>
+            Toque no celular interativo abaixo e experimente a velocidade que seu cliente e sua equipe vão ter todos os dias:
+          </p>
+        </div>
+
+        <div class="unified-experience-grid">
+
+          <!-- COLUNA 1: PASSOS DO CLIENTE (RESUMIDO & DIRETO) -->
+          <div class="unified-col col-client">
+            <div class="perspective-header">
+              <div class="perspective-badge client">
+                <svg class="svg-icon svg-icon-xs" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                <span>VISÃO DO CLIENTE</span>
+              </div>
+              <h3 class="perspective-title">O que o motorista faz</h3>
+              <p class="perspective-subtitle">Jornada 100% intuitiva em 3 passos rápidos:</p>
+            </div>
+
+            <div class="journey-steps-list">
+              <div class="journey-step-item">
+                <div class="step-num-bubble">1</div>
+                <div class="step-content">
+                  <h4>Escolhe o Veículo</h4>
+                  <p>Montadora, modelo e motorização em poucos toques.</p>
+                </div>
+              </div>
+
+              <div class="journey-step-item">
+                <div class="step-num-bubble">2</div>
+                <div class="step-content">
+                  <h4>IA Calcula Tudo</h4>
+                  <p>Litragem de fábrica e fluidos 100% homologados.</p>
+                </div>
+              </div>
+
+              <div class="journey-step-item">
+                <div class="step-num-bubble">3</div>
+                <div class="step-content">
+                  <h4>Orçamento no WhatsApp</h4>
+                  <p>Preço com desconto travado pronto para agendar.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-instruction-tip">
+              <span class="tip-icon">
+                <svg class="svg-icon svg-icon-xs" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+              </span>
+              <span><strong>Teste ao vivo:</strong> Toque no celular e faça uma simulação agora!</span>
+            </div>
+
+            <!-- BOTÃO PARA RECOLHER NO MOBILE -->
+            <button type="button" class="mobile-close-example-btn" data-target="col-client">
+              <span>Recolher exemplo do motorista ▲</span>
+            </button>
+          </div>
+
+          <!-- COLUNA 2: SMARTPHONE INTERATIVO AO VIVO (APP REAL DENTRO DO CELULAR) -->
+          <div class="unified-col col-phone">
+            <div class="phone-mockup-wrapper">
+              <div class="phone-live-indicator">
+                <span class="pulse-dot-green"></span>
+                <span>App Oficial Maré Flow • 100% Interativo</span>
+              </div>
+
+              <!-- MOLDURA REALISTA DO SMARTPHONE -->
+              <div class="smartphone-device">
+                <!-- BOTÕES LATERAIS DECORATIVOS -->
+                <div class="phone-side-button vol-up"></div>
+                <div class="phone-side-button vol-down"></div>
+                <div class="phone-side-button power"></div>
+
+                <!-- DISPLAY INTERNO -->
+                <div class="smartphone-screen">
+                  <!-- STATUS BAR DO APARELHO -->
+                  <div class="phone-status-bar">
+                    <span class="status-time">09:41</span>
+                    <div class="phone-dynamic-island">
+                      <span class="island-camera"></span>
+                      <span class="island-sensor"></span>
+                    </div>
+                    <div class="status-icons">
+                      <svg class="svg-icon svg-icon-xxs" viewBox="0 0 24 24"><path d="M5 12.55a11 11 0 0 1 14.08 0M1.42 9a16 16 0 0 1 21.16 0M8.53 16.11a6 6 0 0 1 6.95 0M12 20h.01"/></svg>
+                      <span class="status-battery"><span class="battery-fill"></span></span>
+                    </div>
+                  </div>
+
+                  <!-- MINI BARRA DE URL DO APP -->
+                  <div class="phone-url-bar">
+                    <div class="phone-url-chip">
+                      <svg class="svg-icon svg-icon-xxs" viewBox="0 0 24 24"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                      <span>orcamento.mareflow.com.br/simulador</span>
+                    </div>
+                    <button type="button" class="phone-reload-btn" id="phone-iframe-reload" title="Reiniciar simulação" aria-label="Recarregar simulador">
+                      <svg class="svg-icon svg-icon-xxs" viewBox="0 0 24 24"><path d="M3 12a9 9 0 0 1 15-6.7L21 8M21 3v5h-5M21 12a9 9 0 0 1-15 6.7L3 16M3 21v-5h5"/></svg>
+                    </button>
+                  </div>
+
+                  <!-- O IFRAME REAL DO SIMULADOR OFICIAL (DENTRO DO CELULAR) -->
+                  <div class="phone-iframe-wrap">
+                    <iframe id="app-live-iframe" src="https://orcamento.mareflow.com.br/simulador.html" title="Simulador Oficial de Orçamentos Maré Flow" allow="clipboard-write"></iframe>
+                  </div>
+
+                  <!-- HOME INDICATOR -->
+                  <div class="phone-home-indicator"></div>
+                </div>
+              </div>
+
+              <div class="phone-footer-caption">
+                <span>— Role e toque dentro do celular acima para realizar todos os passos do orçamento até o final.</span>
+              </div>
+
+              <!-- BOTÕES DE EXEMPLO EXCLUSIVOS PARA MOBILE (EVITA DEIXAR O SITE EXTENSO) -->
+              <div class="mobile-demo-toggles">
+                <span class="mobile-toggles-hint">Toque para ver os exemplos detalhados:</span>
+                <div class="mobile-toggles-row">
+                  <button type="button" class="mobile-toggle-btn" data-target="col-client" aria-expanded="false">
+                    <span class="toggle-btn-left">
+                      <span class="toggle-btn-icon blue">
+                        <svg class="svg-icon svg-icon-xs" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                      </span>
+                      <span>Passo a Passo do Motorista</span>
+                    </span>
+                    <span class="toggle-arrow">
+                      <svg class="svg-icon svg-icon-xxs" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+                    </span>
+                  </button>
+
+                  <button type="button" class="mobile-toggle-btn" data-target="col-owner" aria-expanded="false">
+                    <span class="toggle-btn-left">
+                      <span class="toggle-btn-icon green">
+                        <svg class="svg-icon svg-icon-xs" viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+                      </span>
+                      <span>Notificação no WhatsApp</span>
+                    </span>
+                    <span class="toggle-arrow">
+                      <svg class="svg-icon svg-icon-xxs" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+                    </span>
+                  </button>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- COLUNA 3: PASSOS DA SUA OFICINA & MENSAGEM WHATSAPP -->
+          <div class="unified-col col-owner">
+            <div class="perspective-header">
+              <div class="perspective-badge owner">
+                <svg class="svg-icon svg-icon-xs" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                <span>VISÃO DA OFICINA</span>
+              </div>
+              <h3 class="perspective-title">O que você recebe</h3>
+              <p class="perspective-subtitle">Lead qualificado em tempo real direto na sua tela:</p>
+            </div>
+
+            <!-- RESUMO COMPACTO DOS BENEFÍCIOS PARA A OFICINA -->
+            <div class="owner-benefits-summary">
+              <div class="owner-benefit-pill">
+                <span class="owner-pill-icon">
+                  <svg class="svg-icon svg-icon-xs" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                </span>
+                <div class="owner-pill-text">
+                  <strong>Alerta Instantâneo:</strong> Notificação no WhatsApp no exato momento da cotação.
+                </div>
+              </div>
+              <div class="owner-benefit-pill">
+                <span class="owner-pill-icon">
+                  <svg class="svg-icon svg-icon-xs" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                </span>
+                <div class="owner-pill-text">
+                  <strong>Margem &amp; Peças Travadas:</strong> Preço final com seu lucro sem ligar para distribuidora.
+                </div>
+              </div>
+              <div class="owner-benefit-pill">
+                <span class="owner-pill-icon">
+                  <svg class="svg-icon svg-icon-xs" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>
+                </span>
+                <div class="owner-pill-text">
+                  <strong>Direto no CRM:</strong> Lead organizado para a recepção só agendar no box.
+                </div>
+              </div>
+            </div>
+
+            <!-- MOCKUP HIPER-REALISTA DA NOTIFICAÇÃO DO WHATSAPP QUE O DONO RECEBE -->
+            <div class="whatsapp-mockup-card">
+              <div class="wa-mockup-topbar">
+                <div class="wa-sender-info">
+                  <div class="wa-avatar">
+                    <img src="logo.png" alt="Maré Flow" width="28" height="28">
+                    <span class="wa-badge-check">✓</span>
+                  </div>
+                  <div class="wa-sender-names">
+                    <strong>Notificação de Cotação</strong>
+                    <span>Sistema Oficial Maré Flow • Agora</span>
+                  </div>
+                </div>
+                <span class="wa-status-pill">Lead Quente</span>
+              </div>
+
+              <div class="wa-mockup-chat-body">
+                <div class="wa-message-bubble">
+                  <div class="wa-msg-header">
+                    <span class="wa-tag-alert">NOVO ORÇAMENTO RECEBIDO</span>
+                    <span class="wa-msg-time">Agora</span>
+                  </div>
+
+                  <div class="wa-msg-text">
+                    <p class="wa-lead-line"><span class="wa-lead-dash">—</span> <strong>Veículo:</strong> Hyundai Creta 2.0 16V AT6 (2021)</p>
+                    <p class="wa-lead-line"><span class="wa-lead-dash">—</span> <strong>Serviço:</strong> Troca de Óleo de Câmbio Automático</p>
+                    <p class="wa-lead-line"><span class="wa-lead-dash">—</span> <strong>Insumo:</strong> 8,5 Litros Sintético Homologado</p>
+                    <div class="wa-divider"></div>
+                    <p class="wa-lead-line"><span class="wa-lead-dash">—</span> <strong>Motorista:</strong> Carlos Eduardo</p>
+                    <p class="wa-lead-line"><span class="wa-lead-dash">—</span> <strong>WhatsApp:</strong> (48) 99999-7766</p>
+                  </div>
+
+                  <div class="wa-bubble-footer">
+                    <span>10:42</span>
+                    <svg class="svg-icon svg-icon-xxs wa-double-check" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/><polyline points="15 6 9 12 6 9"/></svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- BOTÃO PARA RECOLHER NO MOBILE -->
+            <button type="button" class="mobile-close-example-btn" data-target="col-owner">
+              <span>Recolher exemplo do WhatsApp ▲</span>
+            </button>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         MINI QUESTIONÁRIO & DIAGNÓSTICO INTERATIVO DE ATENDIMENTO E ORÇAMENTOS
+         ========================================================================== -->
+    <section id="diagnostico" class="diag-section">
+      <!-- Âncora de compatibilidade para links externos legados -->
+      <span id="calculadora" style="position:absolute; top:-100px; visibility:hidden;" aria-hidden="true"></span>
+
+      <div class="container">
+        <div class="section-heading center-heading" style="margin-bottom: 32px;">
+          <p class="eyebrow"><span class="line"></span> RAIO-X DE ATENDIMENTO &amp; ORÇAMENTOS</p>
+          <h2 class="diag-section-title">Como está o WhatsApp e os orçamentos da sua oficina?</h2>
+          <p class="diag-section-subtitle">
+            Responda 3 perguntas rápidas da rotina da sua oficina para identificar onde você perde tempo e clientes, e veja como o <strong>App Orçamentos</strong> transforma seu atendimento.
+          </p>
+        </div>
+
+        <div class="diag-cockpit">
+          <!-- CABEÇALHO DO QUESTIONÁRIO COM BARRA DE PROGRESSO -->
+          <div class="diag-header">
+            <div class="diag-step-indicators">
+              <span class="diag-step-tag" id="diag-step-tag">Etapa 1 de 3: Atendimento no WhatsApp</span>
+              <div class="diag-step-pills">
+                <span class="diag-step-pill active" data-step="1">1. WhatsApp</span>
+                <span class="diag-step-pill" data-step="2">2. Orçamentos</span>
+                <span class="diag-step-pill" data-step="3">3. Fechamento</span>
+              </div>
+            </div>
+            <div class="diag-progress-track">
+              <div class="diag-progress-bar" id="diag-progress-bar" style="width: 33.3%;"></div>
+            </div>
+          </div>
+
+          <!-- CONTAINER DAS ETAPAS DO QUESTIONÁRIO -->
+          <div class="diag-quiz-body" id="diag-quiz-body">
+            
+            <!-- ETAPA 1: ROTINA DE WHATSAPP -->
+            <div class="diag-step active" id="diag-step-1" data-step="1">
+              <div class="diag-question-header">
+                <div class="diag-q-number">1</div>
+                <div>
+                  <h3 class="diag-question-title">Como costuma ser a rotina de mensagens e orçamentos no seu WhatsApp?</h3>
+                  <p class="diag-question-desc">Selecione a situação que mais se aproxima do dia a dia da sua oficina:</p>
+                </div>
+              </div>
+
+              <div class="diag-options-grid" role="radiogroup" aria-label="Rotina de respostas no WhatsApp">
+                <!-- Opção 1 -->
+                <button type="button" class="diag-option-card" data-step="1" data-value="audios_correria" role="radio" aria-checked="false">
+                  <div class="diag-card-icon">
+                    <svg class="svg-icon svg-icon-md" viewBox="0 0 24 24">
+                      <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
+                      <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+                      <line x1="12" y1="19" x2="12" y2="23"/>
+                      <line x1="8" y1="23" x2="16" y2="23"/>
+                    </svg>
+                  </div>
+                  <div class="diag-card-info">
+                    <div class="diag-card-title-row">
+                      <h4>Áudios rápidos ou texto direto no celular</h4>
+                    </div>
+                    <p><strong class="ex-tag">Ex:</strong> Você ouve o cliente entre um carro e outro no pátio e responde pelo celular com o valor estimado do serviço.</p>
+                  </div>
+                  <div class="diag-check-indicator"></div>
+                </button>
+
+                <!-- Opção 2 -->
+                <button type="button" class="diag-option-card" data-step="1" data-value="pesquisa_demorada" role="radio" aria-checked="false">
+                  <div class="diag-card-icon">
+                    <svg class="svg-icon svg-icon-md" viewBox="0 0 24 24">
+                      <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
+                      <line x1="8" y1="21" x2="16" y2="21"/>
+                      <line x1="12" y1="17" x2="12" y2="21"/>
+                    </svg>
+                  </div>
+                  <div class="diag-card-info">
+                    <div class="diag-card-title-row">
+                      <h4>Consulta com autopeças e distribuidores</h4>
+                    </div>
+                    <p><strong class="ex-tag">Ex:</strong> Você confere o valor das peças e a disponibilidade com fornecedores parceiros antes de enviar o preço final.</p>
+                  </div>
+                  <div class="diag-check-indicator"></div>
+                </button>
+
+                <!-- Opção 3 -->
+                <button type="button" class="diag-option-card" data-step="1" data-value="demora_horas" role="radio" aria-checked="false">
+                  <div class="diag-card-icon">
+                    <svg class="svg-icon svg-icon-md" viewBox="0 0 24 24">
+                      <circle cx="12" cy="12" r="10"/>
+                      <polyline points="12 6 12 12 16 14"/>
+                    </svg>
+                  </div>
+                  <div class="diag-card-info">
+                    <div class="diag-card-title-row">
+                      <h4>Respostas concentradas em pausas do pátio</h4>
+                    </div>
+                    <p><strong class="ex-tag">Ex:</strong> Com a oficina em pleno andamento, as mensagens de orçamento são respondidas nos intervalos ou no final da tarde.</p>
+                  </div>
+                  <div class="diag-check-indicator"></div>
+                </button>
+
+                <!-- Opção 4 -->
+                <button type="button" class="diag-option-card" data-step="1" data-value="recepcao_interrompe" role="radio" aria-checked="false">
+                  <div class="diag-card-icon">
+                    <svg class="svg-icon svg-icon-md" viewBox="0 0 24 24">
+                      <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                      <circle cx="9" cy="7" r="4"/>
+                      <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                      <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                    </svg>
+                  </div>
+                  <div class="diag-card-info">
+                    <div class="diag-card-title-row">
+                      <h4>Recepção alinhando detalhes com você</h4>
+                    </div>
+                    <p><strong class="ex-tag">Ex:</strong> A recepção atende o cliente no WhatsApp e confirma com você no box o tempo de serviço e a especificação das peças.</p>
+                  </div>
+                  <div class="diag-check-indicator"></div>
+                </button>
+              </div>
+            </div>
+
+            <!-- ETAPA 2: ELABORAÇÃO E APRESENTAÇÃO DO ORÇAMENTO -->
+            <div class="diag-step" id="diag-step-2" data-step="2">
+              <div class="diag-question-header">
+                <div class="diag-q-number">2</div>
+                <div>
+                  <h3 class="diag-question-title">De que forma o cliente recebe as informações do orçamento hoje?</h3>
+                  <p class="diag-question-desc">Qual o formato mais utilizado na rotina da sua oficina:</p>
+                </div>
+              </div>
+
+              <div class="diag-options-grid" role="radiogroup" aria-label="Apresentação do orçamento">
+                <!-- Opção 1 -->
+                <button type="button" class="diag-option-card" data-step="2" data-value="texto_solto" role="radio" aria-checked="false">
+                  <div class="diag-card-icon">
+                    <svg class="svg-icon svg-icon-md" viewBox="0 0 24 24">
+                      <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                    </svg>
+                  </div>
+                  <div class="diag-card-info">
+                    <div class="diag-card-title-row">
+                      <h4>Mensagem de texto com resumo do serviço</h4>
+                    </div>
+                    <p><strong class="ex-tag">Ex:</strong> Envia no WhatsApp a descrição do que será realizado e o valor com peças e mão de obra inclusos.</p>
+                  </div>
+                  <div class="diag-check-indicator"></div>
+                </button>
+
+                <!-- Opção 2 -->
+                <button type="button" class="diag-option-card" data-step="2" data-value="preco_cabeca" role="radio" aria-checked="false">
+                  <div class="diag-card-icon">
+                    <svg class="svg-icon svg-icon-md" viewBox="0 0 24 24">
+                      <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                      <line x1="12" y1="9" x2="12" y2="13"/>
+                      <line x1="12" y1="17" x2="12.01" y2="17"/>
+                    </svg>
+                  </div>
+                  <div class="diag-card-info">
+                    <div class="diag-card-title-row">
+                      <h4>Estimativa com base na sua experiência</h4>
+                    </div>
+                    <p><strong class="ex-tag">Ex:</strong> Passa uma previsão prática de acordo com manutenções semelhantes já realizadas para aquele modelo de carro.</p>
+                  </div>
+                  <div class="diag-check-indicator"></div>
+                </button>
+
+                <!-- Opção 3 -->
+                <button type="button" class="diag-option-card" data-step="2" data-value="pdf_demorado" role="radio" aria-checked="false">
+                  <div class="diag-card-icon">
+                    <svg class="svg-icon svg-icon-md" viewBox="0 0 24 24">
+                      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                      <polyline points="14 2 14 8 20 8"/>
+                      <line x1="16" y1="13" x2="8" y2="13"/>
+                      <line x1="16" y1="17" x2="8" y2="17"/>
+                      <polyline points="10 9 9 9 8 9"/>
+                    </svg>
+                  </div>
+                  <div class="diag-card-info">
+                    <div class="diag-card-title-row">
+                      <h4>Orçamento detalhado em PDF pelo computador</h4>
+                    </div>
+                    <p><strong class="ex-tag">Ex:</strong> Digita os dados no sistema ou planilha da oficina e exporta o documento em PDF para mandar no WhatsApp.</p>
+                  </div>
+                  <div class="diag-check-indicator"></div>
+                </button>
+
+                <!-- Opção 4 -->
+                <button type="button" class="diag-option-card" data-step="2" data-value="foto_papel" role="radio" aria-checked="false">
+                  <div class="diag-card-icon">
+                    <svg class="svg-icon svg-icon-md" viewBox="0 0 24 24">
+                      <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+                      <circle cx="12" cy="13" r="4"/>
+                    </svg>
+                  </div>
+                  <div class="diag-card-info">
+                    <div class="diag-card-title-row">
+                      <h4>Anotação de balcão ou comanda física</h4>
+                    </div>
+                    <p><strong class="ex-tag">Ex:</strong> Preenche o bloquinho de balcão ou ordem física à mão e envia a foto das anotações direto pelo WhatsApp.</p>
+                  </div>
+                  <div class="diag-check-indicator"></div>
+                </button>
+              </div>
+            </div>
+
+            <!-- ETAPA 3: CONVERSÃO & FECHAMENTO -->
+            <div class="diag-step" id="diag-step-3" data-step="3">
+              <div class="diag-question-header">
+                <div class="diag-q-number">3</div>
+                <div>
+                  <h3 class="diag-question-title">Qual a situação mais comum após você enviar o orçamento?</h3>
+                  <p class="diag-question-desc">O que você mais costuma observar no retorno dos motoristas:</p>
+                </div>
+              </div>
+
+              <div class="diag-options-grid" role="radiogroup" aria-label="Fechamento de orçamentos">
+                <!-- Opção 1 -->
+                <button type="button" class="diag-option-card" data-step="3" data-value="vacuo_clientes" role="radio" aria-checked="false">
+                  <div class="diag-card-icon">
+                    <svg class="svg-icon svg-icon-md" viewBox="0 0 24 24">
+                      <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                      <circle cx="12" cy="12" r="3"/>
+                    </svg>
+                  </div>
+                  <div class="diag-card-info">
+                    <div class="diag-card-title-row">
+                      <h4>Clientes que analisam e demoram para responder</h4>
+                    </div>
+                    <p><strong class="ex-tag">Ex:</strong> O motorista visualiza o valor, diz que vai se programar ou conversar em casa e a resposta fica para depois.</p>
+                  </div>
+                  <div class="diag-check-indicator"></div>
+                </button>
+
+                <!-- Opção 2 -->
+                <button type="button" class="diag-option-card" data-step="3" data-value="fechou_concorrente" role="radio" aria-checked="false">
+                  <div class="diag-card-icon">
+                    <svg class="svg-icon svg-icon-md" viewBox="0 0 24 24">
+                      <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+                    </svg>
+                  </div>
+                  <div class="diag-card-info">
+                    <div class="diag-card-title-row">
+                      <h4>Clientes que pesquisam em mais de um lugar</h4>
+                    </div>
+                    <p><strong class="ex-tag">Ex:</strong> O motorista cota com várias oficinas ao mesmo tempo e costuma fechar com quem apresentar as informações mais rápido.</p>
+                  </div>
+                  <div class="diag-check-indicator"></div>
+                </button>
+
+                <!-- Opção 3 -->
+                <button type="button" class="diag-option-card" data-step="3" data-value="pede_desconto" role="radio" aria-checked="false">
+                  <div class="diag-card-icon">
+                    <svg class="svg-icon svg-icon-md" viewBox="0 0 24 24">
+                      <line x1="19" y1="5" x2="5" y2="19"/>
+                      <circle cx="6.5" cy="6.5" r="2.5"/>
+                      <circle cx="17.5" cy="17.5" r="2.5"/>
+                    </svg>
+                  </div>
+                  <div class="diag-card-info">
+                    <div class="diag-card-title-row">
+                      <h4>Negociação de valores e parcelamento</h4>
+                    </div>
+                    <p><strong class="ex-tag">Ex:</strong> O cliente pergunta sobre condições de parcelamento no cartão, desconto à vista ou negocia itens do orçamento.</p>
+                  </div>
+                  <div class="diag-check-indicator"></div>
+                </button>
+
+                <!-- Opção 4 -->
+                <button type="button" class="diag-option-card" data-step="3" data-value="preso_balcao" role="radio" aria-checked="false">
+                  <div class="diag-card-icon">
+                    <svg class="svg-icon svg-icon-md" viewBox="0 0 24 24">
+                      <circle cx="12" cy="12" r="10"/>
+                      <path d="M12 6v6l4 2"/>
+                    </svg>
+                  </div>
+                  <div class="diag-card-info">
+                    <div class="diag-card-title-row">
+                      <h4>Alto volume de conversas para acompanhar</h4>
+                    </div>
+                    <p><strong class="ex-tag">Ex:</strong> Chegam muitos pedidos diários e exige bastante tempo dedicado ao atendimento para tirar dúvidas e confirmar horários.</p>
+                  </div>
+                  <div class="diag-check-indicator"></div>
+                </button>
+              </div>
+            </div>
+
+            <!-- BOTÕES DE NAVEGAÇÃO DO QUESTIONÁRIO -->
+            <div class="diag-nav-bar">
+              <button type="button" class="diag-btn-secondary" id="diag-btn-prev" style="display: none;">
+                <svg class="svg-icon svg-icon-xs" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+                <span>Voltar</span>
+              </button>
+              
+              <div class="diag-nav-status">
+                <span id="diag-selection-hint">Selecione uma opção acima para avançar</span>
+              </div>
+
+              <button type="button" class="diag-btn-primary" id="diag-btn-next" disabled>
+                <span>Avançar</span>
+                <svg class="svg-icon svg-icon-xs" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+              </button>
+            </div>
+
+          </div>
+
+          <!-- TELA INTERMEDIÁRIA DE ANÁLISE / CARREGAMENTO -->
+          <div class="diag-loading-screen" id="diag-loading-screen" style="display: none;">
+            <div class="diag-loader-spinner"></div>
+            <h4 class="diag-loader-title">Processando respostas do seu atendimento...</h4>
+            <p class="diag-loader-sub">Cruzando dados com o comportamento de compra de motoristas no WhatsApp</p>
+            <div class="diag-loader-tags">
+              <span>Velocidade de resposta</span>
+              <span>Tempo de atendimento</span>
+              <span>Margem e conversão</span>
+            </div>
+          </div>
+
+          <!-- TELA DE RESULTADO & DIAGNÓSTICO FINAL -->
+          <div class="diag-result-screen" id="diag-result-screen" style="display: none;">
+            
+            <!-- HEADER DO RESULTADO & PONTUAÇÃO -->
+            <div class="diag-result-header">
+              <div class="diag-result-top-bar">
+                <div class="diag-result-badge">
+                  <svg class="svg-icon svg-icon-xs" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                  <span>DIAGNÓSTICO CONCLUÍDO</span>
+                </div>
+                
+                <!-- PONTUAÇÃO DE AGILIDADE DA OFICINA -->
+                <div class="diag-score-card">
+                  <div class="diag-score-icon">
+                    <svg class="svg-icon svg-icon-md" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                  </div>
+                  <div class="diag-score-data">
+                    <span class="diag-score-label">Índice de Agilidade da sua Oficina:</span>
+                    <div class="diag-score-row">
+                      <strong class="diag-score-number" id="diag-score-value">78 / 100</strong>
+                      <span class="diag-score-tag" id="diag-score-status">Alto Potencial de Escala</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <h3 class="diag-result-title" id="diag-result-title">
+                Mais velocidade no WhatsApp e fechamento imediato
+              </h3>
+              <p class="diag-result-summary" id="diag-result-summary">
+                Cotações prontas em 15 segundos liberam o pátio e aceleram as aprovações.
+              </p>
+            </div>
+
+            <!-- CARDS DE COMPARAÇÃO DE IMPACTO (ANTES VS COM APP) -->
+            <div class="diag-impact-grid">
+              
+              <!-- CARD 1: TEMPO -->
+              <div class="diag-impact-card">
+                <div class="diag-impact-card-top">
+                  <span class="diag-impact-icon cyan">
+                    <svg class="svg-icon svg-icon-sm" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                  </span>
+                  <span class="diag-impact-tag">Tempo de Cotação</span>
+                </div>
+                <div class="diag-impact-compare">
+                  <div class="impact-before">
+                    <span class="label">Antes</span>
+                    <strong class="val-before">20 min</strong>
+                  </div>
+                  <div class="impact-arrow">➔</div>
+                  <div class="impact-after highlight-cyan">
+                    <span class="label">Com o App</span>
+                    <strong class="val-after">15 segundos</strong>
+                  </div>
+                </div>
+              </div>
+
+              <!-- CARD 2: CONVERSÃO -->
+              <div class="diag-impact-card">
+                <div class="diag-impact-card-top">
+                  <span class="diag-impact-icon blue">
+                    <svg class="svg-icon svg-icon-sm" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                  </span>
+                  <span class="diag-impact-tag">Fechamento</span>
+                </div>
+                <div class="diag-impact-compare">
+                  <div class="impact-before">
+                    <span class="label">Antes</span>
+                    <strong class="val-before">Texto digitado</strong>
+                  </div>
+                  <div class="impact-arrow">➔</div>
+                  <div class="impact-after highlight-blue">
+                    <span class="label">Com o App</span>
+                    <strong class="val-after">+35% aprovação</strong>
+                  </div>
+                </div>
+              </div>
+
+              <!-- CARD 3: MARGEM -->
+              <div class="diag-impact-card featured">
+                <div class="diag-impact-card-top">
+                  <span class="diag-impact-icon green">
+                    <svg class="svg-icon svg-icon-sm" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                  </span>
+                  <span class="diag-impact-tag green">Segurança</span>
+                </div>
+                <div class="diag-impact-compare">
+                  <div class="impact-before">
+                    <span class="label">Antes</span>
+                    <strong class="val-before">Preço de cabeça</strong>
+                  </div>
+                  <div class="impact-arrow">➔</div>
+                  <div class="impact-after highlight-green">
+                    <span class="label">Com o App</span>
+                    <strong class="val-after">Margem blindada</strong>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- 3 BENEFÍCIOS ESSENCIAIS (DIRETO AO PONTO) -->
+            <div class="diag-highlights-row">
+              <div class="diag-highlight-pill">
+                <span class="diag-hl-icon">
+                  <svg class="svg-icon svg-icon-xs" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                </span>
+                <div class="diag-hl-content">
+                  <strong>Catálogo Técnico Instantâneo:</strong>
+                  <span>Peças, fluidos e mão de obra calculados por modelo.</span>
+                </div>
+              </div>
+
+              <div class="diag-highlight-pill">
+                <span class="diag-hl-icon">
+                  <svg class="svg-icon svg-icon-xs" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                </span>
+                <div class="diag-hl-content">
+                  <strong>Proposta no WhatsApp com 1 Clique:</strong>
+                  <span>Link com marcas, fotos e aprovação imediata.</span>
+                </div>
+              </div>
+
+              <div class="diag-highlight-pill">
+                <span class="diag-hl-icon">
+                  <svg class="svg-icon svg-icon-xs" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                </span>
+                <div class="diag-hl-content">
+                  <strong>Preço Calibrado da sua Oficina:</strong>
+                  <span>Sua margem garantida sem risco de prejuízo.</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- FAIXA DE AÇÕES / CTAS DO RESULTADO -->
+            <div class="diag-cta-footer">
+              <div class="diag-cta-left">
+                <h4>Quer ver na prática na sua oficina?</h4>
+                <p>Veja uma demonstração rápida pelo WhatsApp sem compromisso.</p>
+              </div>
+              <div class="diag-cta-buttons">
+                <a href="https://wa.me/5548992233575?text=Ol%C3%A1!%20Fiz%20o%20diagn%C3%B3stico%20da%20minha%20oficina%20no%20site%20e%20quero%20ver%20como%20o%20App%20Or%C3%A7amentos%20vai%20agilizar%20meu%20WhatsApp%20e%20aumentar%20as%20aprova%C3%A7%C3%B5es!" 
+                   target="_blank" rel="noopener noreferrer" 
+                   class="button primary diag-main-cta magnetic" 
+                   id="diag-cta-wa">
+                  <svg class="svg-icon svg-icon-sm" viewBox="0 0 24 24">
+                    <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
+                  </svg>
+                  <span>Quero o App na Minha Oficina</span>
+                </a>
+
+                <button type="button" class="diag-btn-restart" id="diag-btn-restart">
+                  <svg class="svg-icon svg-icon-xs" viewBox="0 0 24 24"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
+                  <span>Refazer Questionário</span>
+                </button>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         SEÇÃO DEDICADA DE ACESSO DO CLIENTE (LOGIN NO PAINEL)
+         ========================================================================== -->
+    <section class="client-access-section">
+      <div class="container">
+        <div class="client-access-card">
+          <div class="client-access-info">
+            <p class="eyebrow"><span class="line"></span> ÁREA EXCLUSIVA DE OFICINAS PARCEIRAS</p>
+            <h3>Já tem uma oficina cadastrada?</h3>
+            <p>
+              Acesse seu painel administrativo para acompanhar os leads que chegam em tempo real, gerenciar ordens de serviço no Kanban e atualizar sua tabela de preços personalizada.
+            </p>
+            <div class="client-access-features">
+              <span>
+                <svg class="svg-icon svg-icon-sm" viewBox="0 0 24 24">
+                  <rect x="3" y="3" width="7" height="9" rx="1"/>
+                  <rect x="14" y="3" width="7" height="5" rx="1"/>
+                  <rect x="14" y="12" width="7" height="9" rx="1"/>
+                  <rect x="3" y="16" width="7" height="5" rx="1"/>
+                </svg>
+                <span>Funil Kanban ao vivo</span>
+              </span>
+              <span>
+                <svg class="svg-icon svg-icon-sm" viewBox="0 0 24 24">
+                  <line x1="12" y1="1" x2="12" y2="23"/>
+                  <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                </svg>
+                <span>Edição de preços e margens</span>
+              </span>
+              <span>
+                <svg class="svg-icon svg-icon-sm" viewBox="0 0 24 24">
+                  <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
+                </svg>
+                <span>Integração WhatsApp</span>
+              </span>
+              <span>
+                <svg class="svg-icon svg-icon-sm" viewBox="0 0 24 24">
+                  <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+                </svg>
+                <span>Exportação de relatórios</span>
+              </span>
+            </div>
+          </div>
+
+          <div class="client-access-box-right">
+            <a href="crm.html" class="button primary magnetic" style="width: 100%;">
+              <svg class="svg-icon svg-icon-md" viewBox="0 0 24 24">
+                <rect width="18" height="11" x="3" y="11" rx="2" ry="2"/>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+              </svg>
+              <span>Acessar Painel da Oficina</span>
+            </a>
+            <p>Precisa de suporte ou perdeu seu acesso? <a href="https://wa.me/5548998258944?text=Ol%C3%A1!%20Preciso%20de%20ajuda%20para%20acessar%20meu%20painel%20CRM%20da%20oficina" target="_blank" rel="noopener noreferrer" style="color:var(--cyan); font-weight:700;">Falar com o Suporte</a></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         FAQ COMPLETA: RESPOSTAS DIRETAS & QUEBRA DE OBJEÇÕES (FUNDO BRANCO)
+         ========================================================================== -->
+    <section id="faq" class="faq-section light">
+      <div class="container">
+        <div class="section-heading center-heading">
+          <p class="eyebrow"><span class="line"></span> TIRE SUAS DÚVIDAS</p>
+          <h2 class="faq-main-title">Tudo o que você precisa saber <em>para começar hoje</em>.</h2>
+          <p class="faq-main-subtitle">Respostas diretas e transparentes para os donos de centros automotivos mais exigentes:</p>
+        </div>
+
+        <div class="faq-grid">
+          <!-- COLUNA 1 -->
+          <div class="faq-col">
+            <!-- PERGUNTA 1 -->
+            <div class="faq-card" data-faq>
+              <button type="button" class="faq-card-header" aria-expanded="false">
+                <span class="faq-header-content">
+                  <span class="faq-icon-chip">
+                    <svg class="svg-icon svg-icon-sm" viewBox="0 0 24 24">
+                      <circle cx="12" cy="12" r="10"/>
+                      <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+                      <line x1="12" y1="17" x2="12.01" y2="17"/>
+                    </svg>
+                  </span>
+                  <span class="faq-question-title">Preciso instalar algum software ou ter computador potente?</span>
+                </span>
+                <span class="faq-chevron-wrap" aria-hidden="true">
+                  <svg class="svg-icon svg-icon-sm faq-chevron-icon" viewBox="0 0 24 24">
+                    <polyline points="6 9 12 15 18 9"/>
+                  </svg>
+                </span>
+              </button>
+              <div class="faq-card-collapse">
+                <div class="faq-card-content">
+                  <p>Não. O Maré Flow funciona 100% na nuvem. Você e sua equipe acessam de qualquer smartphone (Android ou iPhone), tablet ou computador simples pelo navegador, sem necessidade de instalação pesada ou suporte de TI.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- PERGUNTA 2 -->
+            <div class="faq-card" data-faq>
+              <button type="button" class="faq-card-header" aria-expanded="false">
+                <span class="faq-header-content">
+                  <span class="faq-icon-chip">
+                    <svg class="svg-icon svg-icon-sm" viewBox="0 0 24 24">
+                      <circle cx="12" cy="12" r="10"/>
+                      <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+                      <line x1="12" y1="17" x2="12.01" y2="17"/>
+                    </svg>
+                  </span>
+                  <span class="faq-question-title">Como os clientes da minha região vão acessar o meu simulador?</span>
+                </span>
+                <span class="faq-chevron-wrap" aria-hidden="true">
+                  <svg class="svg-icon svg-icon-sm faq-chevron-icon" viewBox="0 0 24 24">
+                    <polyline points="6 9 12 15 18 9"/>
+                  </svg>
+                </span>
+              </button>
+              <div class="faq-card-collapse">
+                <div class="faq-card-content">
+                  <p>Sua oficina recebe um endereço web exclusivo (ex: <code>orcamento.mareflow.com.br/suaoficina</code>) e um QR Code pronto para impressão. Você pode fixar no link da bio do Instagram, disparar para a sua base no WhatsApp, colocar no balcão físico e vincular a anúncios locais no Google e Meta.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- PERGUNTA 3 -->
+            <div class="faq-card" data-faq>
+              <button type="button" class="faq-card-header" aria-expanded="false">
+                <span class="faq-header-content">
+                  <span class="faq-icon-chip">
+                    <svg class="svg-icon svg-icon-sm" viewBox="0 0 24 24">
+                      <circle cx="12" cy="12" r="10"/>
+                      <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+                      <line x1="12" y1="17" x2="12.01" y2="17"/>
+                    </svg>
+                  </span>
+                  <span class="faq-question-title">Consigo cadastrar os meus próprios preços e marcas de peças?</span>
+                </span>
+                <span class="faq-chevron-wrap" aria-hidden="true">
+                  <svg class="svg-icon svg-icon-sm faq-chevron-icon" viewBox="0 0 24 24">
+                    <polyline points="6 9 12 15 18 9"/>
+                  </svg>
+                </span>
+              </button>
+              <div class="faq-card-collapse">
+                <div class="faq-card-content">
+                  <p>Sim, você tem controle total. No seu painel exclusivo, você ajusta o valor da sua mão de obra por serviço, as margens de lucro sobre fluidos e filtros, e pode pausar ou ativar veículos e serviços específicos conforme a preferência da sua oficina.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- PERGUNTA 4 -->
+            <div class="faq-card faq-card-extra" data-faq>
+              <button type="button" class="faq-card-header" aria-expanded="false">
+                <span class="faq-header-content">
+                  <span class="faq-icon-chip">
+                    <svg class="svg-icon svg-icon-sm" viewBox="0 0 24 24">
+                      <circle cx="12" cy="12" r="10"/>
+                      <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+                      <line x1="12" y1="17" x2="12.01" y2="17"/>
+                    </svg>
+                  </span>
+                  <span class="faq-question-title">O cliente já fecha a ordem de serviço ou é apenas uma estimativa?</span>
+                </span>
+                <span class="faq-chevron-wrap" aria-hidden="true">
+                  <svg class="svg-icon svg-icon-sm faq-chevron-icon" viewBox="0 0 24 24">
+                    <polyline points="6 9 12 15 18 9"/>
+                  </svg>
+                </span>
+              </button>
+              <div class="faq-card-collapse">
+                <div class="faq-card-content">
+                  <p>O sistema consulta a tabela oficial da montadora e calcula o orçamento com precisão e especificações homologadas. Ao finalizar, o cliente clica em "Pedir no WhatsApp" e envia a mensagem já pronta com modelo, versão, itens inclusos e valor final diretamente para a sua recepção confirmar o agendamento.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- COLUNA 2 -->
+          <div class="faq-col faq-col-secondary">
+            <!-- PERGUNTA 5 -->
+            <div class="faq-card faq-card-extra" data-faq>
+              <button type="button" class="faq-card-header" aria-expanded="false">
+                <span class="faq-header-content">
+                  <span class="faq-icon-chip">
+                    <svg class="svg-icon svg-icon-sm" viewBox="0 0 24 24">
+                      <circle cx="12" cy="12" r="10"/>
+                      <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+                      <line x1="12" y1="17" x2="12.01" y2="17"/>
+                    </svg>
+                  </span>
+                  <span class="faq-question-title">Como funciona o painel CRM que acompanha a plataforma?</span>
+                </span>
+                <span class="faq-chevron-wrap" aria-hidden="true">
+                  <svg class="svg-icon svg-icon-sm faq-chevron-icon" viewBox="0 0 24 24">
+                    <polyline points="6 9 12 15 18 9"/>
+                  </svg>
+                </span>
+              </button>
+              <div class="faq-card-collapse">
+                <div class="faq-card-content">
+                  <p>Toda cotação simulada é salva automaticamente no seu CRM no formato Kanban (Novo Lead, Em Negociação, Agendado e Concluído). Sua equipe nunca mais esquece de responder quem cotou à noite ou no final de semana, permitindo recuperar clientes e bater metas mensais.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- PERGUNTA 6 -->
+            <div class="faq-card faq-card-extra" data-faq>
+              <button type="button" class="faq-card-header" aria-expanded="false">
+                <span class="faq-header-content">
+                  <span class="faq-icon-chip">
+                    <svg class="svg-icon svg-icon-sm" viewBox="0 0 24 24">
+                      <circle cx="12" cy="12" r="10"/>
+                      <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+                      <line x1="12" y1="17" x2="12.01" y2="17"/>
+                    </svg>
+                  </span>
+                  <span class="faq-question-title">Quanto tempo demora para a minha oficina começar a operar?</span>
+                </span>
+                <span class="faq-chevron-wrap" aria-hidden="true">
+                  <svg class="svg-icon svg-icon-sm faq-chevron-icon" viewBox="0 0 24 24">
+                    <polyline points="6 9 12 15 18 9"/>
+                  </svg>
+                </span>
+              </button>
+              <div class="faq-card-collapse">
+                <div class="faq-card-content">
+                  <p>A ativação é imediata: em até 24 horas úteis nosso time técnico entrega o seu simulador personalizado com a identidade visual da sua marca, logotipo oficial, WhatsApp cadastrado e catálogo de serviços alinhado à sua operação.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- PERGUNTA 7 -->
+            <div class="faq-card faq-card-extra" data-faq>
+              <button type="button" class="faq-card-header" aria-expanded="false">
+                <span class="faq-header-content">
+                  <span class="faq-icon-chip">
+                    <svg class="svg-icon svg-icon-sm" viewBox="0 0 24 24">
+                      <circle cx="12" cy="12" r="10"/>
+                      <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+                      <line x1="12" y1="17" x2="12.01" y2="17"/>
+                    </svg>
+                  </span>
+                  <span class="faq-question-title">E se a montadora exigir um fluido especial ou litragem específica?</span>
+                </span>
+                <span class="faq-chevron-wrap" aria-hidden="true">
+                  <svg class="svg-icon svg-icon-sm faq-chevron-icon" viewBox="0 0 24 24">
+                    <polyline points="6 9 12 15 18 9"/>
+                  </svg>
+                </span>
+              </button>
+              <div class="faq-card-collapse">
+                <div class="faq-card-content">
+                  <p>A base de dados do Maré Flow possui homologações de fluidos para câmbios CVT, ATF, DSG/Dupla Embreagem e óleos de motor (0W-20, 5W-30, etc.). O sistema calcula automaticamente a litragem necessária de acordo com o veículo selecionado.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- PERGUNTA 8 -->
+            <div class="faq-card faq-card-extra" data-faq>
+              <button type="button" class="faq-card-header" aria-expanded="false">
+                <span class="faq-header-content">
+                  <span class="faq-icon-chip">
+                    <svg class="svg-icon svg-icon-sm" viewBox="0 0 24 24">
+                      <circle cx="12" cy="12" r="10"/>
+                      <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+                      <line x1="12" y1="17" x2="12.01" y2="17"/>
+                    </svg>
+                  </span>
+                  <span class="faq-question-title">Existe contrato de fidelidade ou taxa de cancelamento?</span>
+                </span>
+                <span class="faq-chevron-wrap" aria-hidden="true">
+                  <svg class="svg-icon svg-icon-sm faq-chevron-icon" viewBox="0 0 24 24">
+                    <polyline points="6 9 12 15 18 9"/>
+                  </svg>
+                </span>
+              </button>
+              <div class="faq-card-collapse">
+                <div class="faq-card-content">
+                  <p>Sem multas ou fidelidade forçada. Você contrata a assinatura mensal da plataforma e renova enquanto ela estiver gerando faturamento real e trazendo clientes qualificados para o pátio da sua oficina.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- BOTÃO VER MAIS DÚVIDAS EXCLUSIVO PARA MOBILE -->
+        <div class="faq-more-wrap">
+          <button type="button" class="faq-more-btn" id="faq-more-btn" aria-expanded="false">
+            <span class="faq-more-symbol" id="faq-more-symbol">+</span>
+            <span class="faq-more-text" id="faq-more-text">Ver mais dúvidas</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         CTA FINAL DE CONVERSÃO
+         ========================================================================== -->
+    <section class="cta-banner">
+      <div class="container">
+        <div class="cta-card">
+          <h2 class="cta-title">Pronto para transformar sua oficina em uma máquina de vendas?</h2>
+          <p class="cta-subtitle">
+            Cadastre sua oficina hoje mesmo e ative seu simulador inteligente para fechar mais ordens de serviço todos os dias.
+          </p>
+          <div class="cta-actions-wrap">
+            <a href="https://wa.me/5548992233575?text=Ol%C3%A1!%20Quero%20contratar%20o%20Mar%C3%A9%20Flow%20Or%C3%A7amentos" target="_blank" rel="noopener noreferrer" class="button primary magnetic">
+              <svg class="svg-icon svg-icon-md" viewBox="0 0 24 24">
+                <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
+              </svg>
+              <span>Ativar Minha Oficina no WhatsApp</span>
+            </a>
+            <a href="crm.html" class="button login-action-btn magnetic">
+              <span>Já sou cliente: Entrar no Painel</span>
+              <span class="arrow" aria-hidden="true">→</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ==========================================================================
+       FOOTER MARÉ FLOW OFICIAL
+       ========================================================================== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <!-- Coluna 1: Marca & Propósito -->
+        <div class="footer-brand">
+          <img src="logo.png" alt="Maré Flow" class="footer-logo" width="512" height="512">
+          <p class="footer-desc">
+            Tecnologia com propósito para centros automotivos. Unimos precisão técnica na cotação com dados de montadora, captação ativa no WhatsApp e CRM especializado para transformar visitantes em clientes fiéis.
+          </p>
+          <div class="footer-social-links">
+            <a href="https://instagram.com/mareflow.ia" target="_blank" rel="noopener noreferrer" class="footer-social-btn" aria-label="Instagram da Maré Flow">
+              <svg class="svg-icon svg-icon-md" viewBox="0 0 24 24">
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+              </svg>
+            </a>
+            <a href="https://wa.me/5548998258944?text=Ol%C3%A1!%20Vim%20pelo%20site%20da%20Mar%C3%A9%20Flow" target="_blank" rel="noopener noreferrer" class="footer-social-btn" aria-label="WhatsApp da Maré Flow">
+              <svg class="svg-icon svg-icon-md" viewBox="0 0 24 24">
+                <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Coluna 2: Navegação & Acesso da Oficina -->
+        <div>
+          <h4 class="footer-col-title">ACESSO &amp; FERRAMENTAS</h4>
+          <div class="footer-nav-list">
+            <a href="crm.html" class="footer-nav-link" style="color:var(--cyan); font-weight:700;">
+              <svg class="svg-icon svg-icon-sm" viewBox="0 0 24 24">
+                <rect width="18" height="11" x="3" y="11" rx="2" ry="2"/>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+              </svg>
+              <span>Painel da Oficina (Login CRM)</span>
+            </a>
+            <a href="#demonstracao" class="footer-nav-link">Simulador Instantâneo</a>
+            <a href="#comparativo" class="footer-nav-link">Comparativo Antes vs Depois</a>
+            <a href="#diagnostico" class="footer-nav-link">Diagnóstico da Oficina</a>
+            <a href="https://qrcode.mareflow.com.br/index" target="_blank" rel="noopener noreferrer" class="footer-nav-link">Prontuário por QR Code ↗</a>
+          </div>
+        </div>
+
+        <!-- Coluna 3: Contato & Atendimento -->
+        <div>
+          <h4 class="footer-col-title">CONTATO &amp; ATENDIMENTO</h4>
+          <div class="footer-contact-item">
+            <span class="footer-contact-label">COMERCIAL &amp; NOVAS OFICINAS</span>
+            <a href="tel:+5548992233575" class="footer-contact-val">(48) 99223-3575</a>
+          </div>
+          <div class="footer-contact-item">
+            <span class="footer-contact-label">SUPORTE TÉCNICO A CLIENTES</span>
+            <a href="tel:+5548998258944" class="footer-contact-val">(48) 99825-8944</a>
+          </div>
+          <div class="footer-contact-item">
+            <span class="footer-contact-label">E-MAIL OFICIAL</span>
+            <a href="mailto:ia.mareflow@gmail.com" class="footer-contact-val">ia.mareflow@gmail.com</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Linha Inferior com Copyright e Botão Topo -->
+      <div class="footer-bottom-row">
+        <div>© <span id="year">2026</span> Maré Flow. Todos os direitos reservados.</div>
+        <div>Projetos e tecnologia para centros automotivos em todo o Brasil.</div>
+        <button type="button" class="footer-back-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'});">
+          De volta ao início ↑
+        </button>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
